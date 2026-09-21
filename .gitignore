@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 backend/.venv/
+backend/.coverage
+backend/coverage.xml
 .env
 
 # Node / Angular

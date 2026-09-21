@@ -24,6 +24,14 @@ dependencies = [
 [project.scripts]
 weather-backend = "app.main:run"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5.0",
+    "pytest-asyncio>=0.24",
+    "respx>=0.21",
+]
+
 [build-system]
 requires = ["uv_build>=0.12.17,<0.13.0"]
 build-backend = "uv_build"
@@ -31,3 +39,11 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "app"
 module-root = ""
+
+[tool.pytest.ini_options]
+addopts = ["--cov=app", "--cov-report=term-missing", "--cov-report=xml", "--cov-fail-under=80"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["alembic/*", "tests/*"]
