@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+backend/.venv/
+.env
+
+# Node / Angular
+frontend/webapp/node_modules/
+frontend/webapp/dist/
+frontend/webapp/.angular/
+**/dist/
+
+# UV
+backend/.python-version
+
+# Infra
+infra/.env
+
+# Docker
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.env
+!*.env.example

@@ -1,0 +1,23 @@
+@if (data(); as weather) {
+  <div class="card">
+    <header class="card__header">
+      <h2>{{ weather.city }}</h2>
+      <span class="card__country">{{ weather.country }}</span>
+    </header>
+    <p class="card__temp">{{ weather.temperature }} °C</p>
+    <dl class="card__details">
+      <div>
+        <dt>Viento</dt>
+        <dd>{{ weather.windspeed }} km/h</dd>
+      </div>
+      <div>
+        <dt>Condiciones</dt>
+        <dd>{{ conditions(weather.weathercode) }}</dd>
+      </div>
+      <div>
+        <dt>Hora local</dt>
+        <dd>{{ weather.time }}</dd>
+      </div>
+    </dl>
+  </div>
+}

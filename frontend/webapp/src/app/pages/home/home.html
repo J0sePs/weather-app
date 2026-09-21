@@ -1,0 +1,24 @@
+<header class="topbar">
+  <span class="topbar__logo">Clima</span>
+  <button class="topbar__logout" type="button" (click)="logout()">Cerrar sesión</button>
+</header>
+
+<main class="home">
+  <section class="search">
+    <input
+      [(ngModel)]="city"
+      type="text"
+      placeholder="Buscar ciudad, ej. Madrid"
+      (keyup.enter)="search()"
+    />
+    <button type="button" (click)="search()" [disabled]="loading()">
+      {{ loading() ? 'Buscando...' : 'Buscar' }}
+    </button>
+  </section>
+
+  @if (error(); as message) {
+    <p class="home__error" role="alert">{{ message }}</p>
+  }
+
+  <app-weather-card [data]="weather()" />
+</main>

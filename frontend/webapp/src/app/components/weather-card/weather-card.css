@@ -1,0 +1,52 @@
+.card {
+  background: #ffffff;
+  border: 1px solid #dbe3ea;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 420px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
+}
+
+.card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card__header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.card__country {
+  color: #5b7186;
+  font-size: 0.9rem;
+}
+
+.card__temp {
+  font-size: 2.6rem;
+  font-weight: 600;
+  margin: 12px 0;
+}
+
+.card__details {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.card__details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card__details dt {
+  color: #5b7186;
+}
+
+.card__details dd {
+  margin: 0;
+  font-weight: 500;
+}

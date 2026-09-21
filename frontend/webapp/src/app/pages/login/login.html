@@ -1,0 +1,32 @@
+<main class="login">
+  <div class="login__box">
+    <h1 class="login__title">Clima</h1>
+    <p class="login__subtitle">
+      {{ mode() === 'login' ? 'Inicia sesión para consultar el clima' : 'Crea tu cuenta para comenzar' }}
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        Email
+        <input formControlName="email" type="email" autocomplete="email" />
+      </label>
+
+      <label>
+        Contraseña
+        <input formControlName="password" type="password" autocomplete="current-password" />
+      </label>
+
+      @if (error(); as message) {
+        <p class="login__error" role="alert">{{ message }}</p>
+      }
+
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Espera...' : mode() === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
+      </button>
+    </form>
+
+    <button class="login__toggle" type="button" (click)="toggleMode()">
+      {{ mode() === 'login' ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
+    </button>
+  </div>
+</main>
