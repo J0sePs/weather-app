@@ -37,5 +37,5 @@
 ## 6. Deployment y documentación de secretos
 
 - [x] 6.1 Verificar que `proposal.md` documenta los 3 secrets requeridos del entorno `production` (`EC2_HOST`, `EC2_USER`, `EC2_SSH_KEY`) en la sección What Changes, ajustándola si falta alguno
-- [ ] 6.2 Crear el entorno GitHub `production` con protection rule de required reviewers (mínimo 1) y los 3 secrets de entorno con los valores de la EC2, y agregar la clave pública `weather-deploy` a `~/.ssh/authorized_keys` de la instancia (paso manual previo al primer deploy)
-- [ ] 6.3 Validación end-to-end: abrir una PR a `main` y verificar que `backend-test` y `frontend-test` pasan; luego merge a `main`, aprobar manualmente el job `deploy` en el entorno `production` y verificar que la app queda actualizada en la EC2 (build en la instancia, migraciones al día, sin contenedores huérfanos)
+- [x] 6.2 Crear el entorno GitHub `production` con protection rule de required reviewers (mínimo 1) y los 3 secrets de entorno con los valores de la EC2, y agregar la clave pública `weather-deploy` a `~/.ssh/authorized_keys` de la instancia (paso manual previo al primer deploy)
+- [x] 6.3 Validación end-to-end: abrir una PR a `main` y verificar que `backend-test` y `frontend-test` pasan; luego merge a `main`, aprobar manualmente el job `deploy` en el entorno `production` y verificar que la app queda actualizada en la EC2 (build en la instancia, migraciones al día, sin contenedores huérfanos)
