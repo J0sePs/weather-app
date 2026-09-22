@@ -27,6 +27,11 @@ describe('LoginPage', () => {
     fixture.detectChanges();
   });
 
+  it('shows "Iniciar sesión" on the submit button in login mode', () => {
+    const button = fixture.nativeElement.querySelector('button[type="submit"]');
+    expect(button.textContent).toContain('Iniciar sesión');
+  });
+
   it('submits a login and navigates to /home', () => {
     spyOn(router, 'navigate').and.stub();
     component.form.setValue({ email: 'a@b.com', password: 'secret123' });
