@@ -12,6 +12,7 @@ export interface WeatherResponse {
   windspeed: number;
   weathercode: number;
   time: string;
+  provider: string;
 }
 
 @Injectable({ providedIn: 'root' })

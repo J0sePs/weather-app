@@ -50,3 +50,9 @@
   margin: 0;
   font-weight: 500;
 }
+
+.card__source {
+  margin: 12px 0 0;
+  color: #5b7186;
+  font-size: 0.75rem;
+}
