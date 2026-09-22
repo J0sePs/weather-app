@@ -241,3 +241,62 @@ Debe correr con `set -e` para que cualquier paso que falle detenga el deploy (no
 - Blue/green deployment (fuera de alcance para single-instance).
 - Smoke tests post-deploy con rollback (futuro).
 - Notificaciones a Slack/Discord (futuro).
+
+
+## Weather Provider Redundancy
+
+### Providers
+- **Primary:** Open-Meteo (sin API key, ya integrado).
+- **Secondary:** OpenWeatherMap (`https://api.openweathermap.org/data/2.5/weather?q=<city>&appid=<key>&units=metric`).
+- **API key config:** variable de entorno `OPENWEATHERMAP_API_KEY` leída con pydantic-settings; opcional en dev, obligatoria en prod.
+
+### Fallback Strategy
+- **Timeout del primary:** 5 segundos por request HTTP.
+- **Trigger del fallback (usar secondary):**
+  - `httpx.TimeoutException`
+  - `httpx.NetworkError`
+  - HTTP 5xx del primary
+  - HTTP 429 del primary (rate limit)
+- **NO hacer fallback** en errores 4xx del usuario (400, 404 ciudad no encontrada). Esos son válidos y se propagan tal cual.
+- **Si ambos providers fallan:** devolver HTTP 503 con detail `"All weather providers unavailable"`.
+
+### Response Normalization
+Ambos providers deben devolver el mismo shape al frontend, agregando un campo `provider`:
+```
+{
+  "city": str,
+  "country": str,
+  "latitude": float,
+  "longitude": float,
+  "temperature": float,
+  "windspeed": float,
+  "weathercode": int,
+  "time": str,
+  "provider": str   // "open-meteo" | "openweathermap"
+}
+```
+- Para OpenWeatherMap, mapear su `weather[0].id` directamente al campo `weathercode` (no requiere traducción; el frontend usa un rango de iconos genéricos).
+- Para OpenWeatherMap, `windspeed` viene en m/s → convertir a km/h multiplicando por 3.6.
+- Para OpenWeatherMap, `time` es `dt` (Unix timestamp) → convertir a ISO 8601 UTC.
+
+### Logging
+- Loguear cada fallback con nivel `WARNING`: `"primary failed with <exc>, falling back to openweathermap"`.
+- Loguear cuando ambos fallan con nivel `ERROR`.
+
+### Testing Requirements
+Añadir estos tests a `backend/tests/test_weather.py` sin bajar del 80% de coverage:
+- `test_weather_uses_primary_when_ok`: primary OK → response con `provider == "open-meteo"`.
+- `test_weather_fallbacks_on_primary_timeout`: primary timeout → response con `provider == "openweathermap"`.
+- `test_weather_fallbacks_on_primary_5xx`: primary 503 → fallback → 200 con secondary.
+- `test_weather_returns_503_when_both_fail`: ambos fallan → 503.
+- `test_weather_does_not_fallback_on_404`: primary 404 (ciudad no existe) → propagar 404, NO llamar secondary.
+
+Todos los mocks con `respx`; NO llamadas reales a internet.
+
+### Non-goals (para este change)
+- Circuit breaker o retry con backoff (por ahora un intento por provider).
+- Cache de respuestas.
+- Métricas (Prometheus) del ratio primary/secondary.
+- Un tercer provider.
+
+

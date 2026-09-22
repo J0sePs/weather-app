@@ -15,6 +15,7 @@ describe('HomePage', () => {
     windspeed: 12.1,
     weathercode: 2,
     time: '2026-09-21T12:00',
+    provider: 'open-meteo',
   };
 
   let fixture: ComponentFixture<HomePage>;

@@ -18,6 +18,7 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       SECRET_KEY: ${SECRET_KEY}
+      OPENWEATHERMAP_API_KEY: ${OPENWEATHERMAP_API_KEY}
     depends_on:
       db:
         condition: service_healthy

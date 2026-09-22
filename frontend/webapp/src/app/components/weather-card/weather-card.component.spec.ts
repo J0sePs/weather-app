@@ -13,6 +13,7 @@ describe('WeatherCard', () => {
     windspeed: 9.3,
     weathercode: 0,
     time: '2026-09-21T12:00',
+    provider: 'open-meteo',
   };
 
   let fixture: ComponentFixture<WeatherCard>;
@@ -34,6 +35,7 @@ describe('WeatherCard', () => {
     expect(text).toContain('18.5');
     expect(text).toContain('9.3');
     expect(text).toContain('Cielo despejado');
+    expect(text).toContain('Source: open-meteo');
   });
 
   it('renders nothing when data is null', () => {

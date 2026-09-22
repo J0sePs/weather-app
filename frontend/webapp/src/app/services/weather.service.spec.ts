@@ -30,6 +30,7 @@ describe('WeatherService', () => {
       windspeed: 12.1,
       weathercode: 2,
       time: '2026-09-21T12:00',
+      provider: 'open-meteo',
     };
     let result: WeatherResponse | undefined;
 
